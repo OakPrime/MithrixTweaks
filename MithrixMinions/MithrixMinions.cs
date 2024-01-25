@@ -6,6 +6,7 @@ using RoR2;
 using UnityEngine.Networking;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using System.Collections;
 
 namespace MithrixMinions
 {
@@ -25,7 +26,7 @@ namespace MithrixMinions
         public const string PluginGUID = PluginAuthor + "." + PluginName;
         public const string PluginAuthor = "OakPrime";
         public const string PluginName = "MithrixMinions";
-        public const string PluginVersion = "1.0.0";
+        public const string PluginVersion = "0.1.0";
         private RoR2.SpawnCard exploderSpawnCard = Addressables.LoadAssetAsync<RoR2.SpawnCard>((object)"RoR2/Base/LunarExploder/cscLunarExploder.asset").WaitForCompletion();
 
 
@@ -62,9 +63,10 @@ namespace MithrixMinions
                 {
                     orig(self);
                     RoR2.SpawnCard spawnCard = this.exploderSpawnCard;
-                    for (int i = 0; i < 4; i++)
+                    foreach (Vector3 vec in (new ArrayList { new Vector3(25.0f, 0.0f, 25.0f), new Vector3(25.0f, 0.0f, -25.0f), new Vector3(-25.0f, 0.0f, 25.0f), new Vector3(-25.0f, 0.0f, -25.0f) }))
                     {
-                        GameObject spawnedInstance = spawnCard.DoSpawn(self.characterBody.footPosition, Quaternion.identity, new RoR2.DirectorSpawnRequest(spawnCard, new RoR2.DirectorPlacementRule()
+                        
+                        GameObject spawnedInstance = spawnCard.DoSpawn(self.characterBody.footPosition + vec, Quaternion.identity, new RoR2.DirectorSpawnRequest(spawnCard, new RoR2.DirectorPlacementRule()
                         {
                             placementMode = RoR2.DirectorPlacementRule.PlacementMode.Direct
                         }, RoR2.Run.instance.runRNG)
