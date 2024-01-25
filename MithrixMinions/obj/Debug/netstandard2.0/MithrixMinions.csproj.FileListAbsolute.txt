@@ -1,0 +1,12 @@
+C:\Users\Dan\source\repos\MithrixMinions\MithrixMinions\bin\Debug\netstandard2.0\MithrixMinions.deps.json
+C:\Users\Dan\source\repos\MithrixMinions\MithrixMinions\bin\Debug\netstandard2.0\MithrixMinions.dll
+C:\Users\Dan\source\repos\MithrixMinions\MithrixMinions\bin\Debug\netstandard2.0\MithrixMinions.pdb
+C:\Users\Dan\source\repos\MithrixMinions\MithrixMinions\bin\Debug\netstandard2.0\R2API.Language.dll
+C:\Users\Dan\source\repos\MithrixMinions\MithrixMinions\obj\Debug\netstandard2.0\MithrixMinions.csproj.AssemblyReference.cache
+C:\Users\Dan\source\repos\MithrixMinions\MithrixMinions\obj\Debug\netstandard2.0\MithrixMinions.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Dan\source\repos\MithrixMinions\MithrixMinions\obj\Debug\netstandard2.0\MithrixMinions.AssemblyInfoInputs.cache
+C:\Users\Dan\source\repos\MithrixMinions\MithrixMinions\obj\Debug\netstandard2.0\MithrixMinions.AssemblyInfo.cs
+C:\Users\Dan\source\repos\MithrixMinions\MithrixMinions\obj\Debug\netstandard2.0\MithrixMinions.csproj.CoreCompileInputs.cache
+C:\Users\Dan\source\repos\MithrixMinions\MithrixMinions\obj\Debug\netstandard2.0\MithrixMinions.csproj.CopyComplete
+C:\Users\Dan\source\repos\MithrixMinions\MithrixMinions\obj\Debug\netstandard2.0\MithrixMinions.dll
+C:\Users\Dan\source\repos\MithrixMinions\MithrixMinions\obj\Debug\netstandard2.0\MithrixMinions.pdb
