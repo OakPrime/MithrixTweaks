@@ -1,12 +1,9 @@
 using BepInEx;
-using Mono.Cecil.Cil;
-using MonoMod.Cil;
 using System;
 using RoR2;
 using UnityEngine.Networking;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using System.Collections;
 
 namespace MithrixMinions
 {
@@ -26,8 +23,8 @@ namespace MithrixMinions
         public const string PluginGUID = PluginAuthor + "." + PluginName;
         public const string PluginAuthor = "OakPrime";
         public const string PluginName = "MithrixMinions";
-        public const string PluginVersion = "0.1.0";
-        private RoR2.SpawnCard exploderSpawnCard = Addressables.LoadAssetAsync<RoR2.SpawnCard>((object)"RoR2/Base/LunarExploder/cscLunarExploder.asset").WaitForCompletion();
+        public const string PluginVersion = "1.0.0";
+        private RoR2.SpawnCard minionSpawnCard = Addressables.LoadAssetAsync<RoR2.SpawnCard>((object)"RoR2/Base/LunarExploder/cscLunarExploder.asset").WaitForCompletion();
 
 
         //The Awake() method is run at the very start when the game is initialized.
@@ -36,37 +33,21 @@ namespace MithrixMinions
             Log.Init(Logger);
             try
             {
-                Logger.LogDebug("test");
-
-                /*RoR2.RoR2Application.onLoad += () =>
-                {
-                    Logger.LogDebug("test2");
-
-                    Logger.LogDebug("eliteCat length : " + EliteCatalog.eliteDefs.Length);
-                    foreach (EliteDef def in EliteCatalog.eliteDefs)
-                    {
-                        Logger.LogDebug(def.name + ": health factor: " + def.healthBoostCoefficient + " damage factor: " + def.damageBoostCoefficient);
-                        if (def.name.Equals("edVoid")) {
-                            //Logger.LogDebug("Old health factor: " + def.healthBoostCoefficient);
-                            //Logger.LogDebug("Old damage factor: " + def.damageBoostCoefficient);
-
-                            //def.healthBoostCoefficient = 1.42f;
-                            def.damageBoostCoefficient = 10.0f;
-                            //Logger.LogDebug("New health factor: " + def.healthBoostCoefficient);
-
-                            //Logger.LogDebug("New damage factor: " + def.damageBoostCoefficient);
-
-                        }
-                    };
-                };*/
                 On.EntityStates.BrotherMonster.ExitSkyLeap.OnEnter += (orig, self) =>
                 {
                     orig(self);
-                    RoR2.SpawnCard spawnCard = this.exploderSpawnCard;
-                    foreach (Vector3 vec in (new ArrayList { new Vector3(25.0f, 0.0f, 25.0f), new Vector3(25.0f, 0.0f, -25.0f), new Vector3(-25.0f, 0.0f, 25.0f), new Vector3(-25.0f, 0.0f, -25.0f) }))
+                    MithrixMinionsBehavior behavior = self.characterBody.GetComponent<MithrixMinionsBehavior>();
+                    if (behavior == null)
                     {
-                        
-                        GameObject spawnedInstance = spawnCard.DoSpawn(self.characterBody.footPosition + vec, Quaternion.identity, new RoR2.DirectorSpawnRequest(spawnCard, new RoR2.DirectorPlacementRule()
+                        Log.LogDebug("New behavior created");
+                        behavior = self.characterBody.gameObject.AddComponent<MithrixMinionsBehavior>();
+                    }
+                    int minionCount = behavior.MinionCount();
+                    //Log.LogDebug("Minion count: " + minionCount);
+                    Vector3[] relativePos = { new Vector3(25.0f, 0.0f, 25.0f), new Vector3(-25.0f, 0.0f, -25.0f), new Vector3(25.0f, 0.0f, -25.0f), new Vector3(-25.0f, 0.0f, 25.0f) };
+                    for (int i = minionCount; i < 4; i++)
+                    {
+                        GameObject spawnedInstance = this.minionSpawnCard.DoSpawn(self.characterBody.footPosition + relativePos[i], Quaternion.identity, new RoR2.DirectorSpawnRequest(this.minionSpawnCard, new RoR2.DirectorPlacementRule()
                         {
                             placementMode = RoR2.DirectorPlacementRule.PlacementMode.Direct
                         }, RoR2.Run.instance.runRNG)
@@ -74,7 +55,9 @@ namespace MithrixMinions
                             teamIndexOverride = new TeamIndex?(TeamIndex.Monster)
                         }).spawnedInstance;
                         NetworkServer.Spawn(spawnedInstance);
-                        Logger.LogDebug("Spawned little guy");
+                        behavior.AddMinion(spawnedInstance.gameObject.GetComponent<CharacterMaster>().GetBody()); //bug prob here
+                        //Logger.LogDebug("Minion body status: " + ((bool)(UnityEngine.Object)spawnedInstance.gameObject.GetComponent<CharacterBody>() ? "not null" : "null"));
+                        //Logger.LogDebug("Spawned " + spawnedInstance.gameObject.GetComponent<CharacterBody>() + " at position " + (i+1));
                     }
                 };
             }
