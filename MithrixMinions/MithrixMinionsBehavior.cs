@@ -10,22 +10,21 @@ namespace MithrixMinions
 
         private void OnDisable()
         {
-            for (int i = 0; i < minions.Count; i++)
-            {
-                minions[i].healthComponent.health = 0.0f;
-            }
-            minions.Clear();
-        }
-
-        public int MinionCount()
-        {
-            minions.RemoveAll(minion => minion == null);
-            return minions.Count;
+            this.KillMinions();
         }
 
         public void AddMinion(CharacterBody minion)
         {
             minions.Add(minion);
+        }
+
+        public void KillMinions()
+        {
+            for (int i = 0; i < minions.Count; i++)
+            {
+                minions[i].healthComponent.health = 0.0f;
+            }
+            minions.Clear();
         }
     }
 }
