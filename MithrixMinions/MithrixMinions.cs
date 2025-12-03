@@ -23,7 +23,7 @@ namespace MithrixMinions
         public const string PluginGUID = PluginAuthor + "." + PluginName;
         public const string PluginAuthor = "OakPrime";
         public const string PluginName = "MithrixTweaks";
-        public const string PluginVersion = "1.0.1";
+        public const string PluginVersion = "1.0.3";
         private RoR2.SpawnCard minionSpawnCard = Addressables.LoadAssetAsync<RoR2.SpawnCard>((object)"RoR2/Base/LunarExploder/cscLunarExploder.asset").WaitForCompletion();
 
 
@@ -41,9 +41,9 @@ namespace MithrixMinions
                 On.EntityStates.BrotherMonster.ExitSkyLeap.FixedUpdate += (orig, self) =>
                 {
                     orig(self);
-                    Log.LogDebug("Timer: " + timer);
+                    //Log.LogDebug("Timer: " + timer);
                     timer -= Time.fixedDeltaTime;
-                    Log.LogDebug("Timer: " + timer);
+                    //Log.LogDebug("Timer: " + timer);
                     //Log.LogDebug("Fixed age: " + self.fixedAge);
                     //if (self.fixedAge )
                     if (timer <= 0.0f)
@@ -66,11 +66,11 @@ namespace MithrixMinions
                 {
                     orig(self);
                     timer = 1.55f;
-                    Logger.LogDebug("Duration: " + self.duration);
+                    //Logger.LogDebug("Duration: " + self.duration);
                     MithrixMinionsBehavior behavior = self.characterBody.GetComponent<MithrixMinionsBehavior>();
                     if (behavior == null)
                     {
-                        Log.LogDebug("New behavior created");
+                        //Log.LogDebug("New behavior created");
                         behavior = self.characterBody.gameObject.AddComponent<MithrixMinionsBehavior>();
                     }
                     Vector3[] relativePos = { new Vector3(25.0f, 0.0f, 25.0f), new Vector3(-25.0f, 0.0f, -25.0f), new Vector3(25.0f, 0.0f, -25.0f), new Vector3(-25.0f, 0.0f, 25.0f) };
@@ -84,6 +84,8 @@ namespace MithrixMinions
                             teamIndexOverride = new TeamIndex?(TeamIndex.Monster)
                         }).spawnedInstance;
                         NetworkServer.Spawn(spawnedInstance);
+                        CharacterBody minionBody = spawnedInstance.gameObject.GetComponent<CharacterMaster>().GetBody();
+                        minionBody.teamComponent.teamIndex = self.characterBody.teamComponent.teamIndex; //prone to null errors, may need to set entire teamComponent
                         behavior.AddMinion(spawnedInstance.gameObject.GetComponent<CharacterMaster>().GetBody()); //bug prob here
                         //Logger.LogDebug("Minion body status: " + ((bool)(UnityEngine.Object)spawnedInstance.gameObject.GetComponent<CharacterBody>() ? "not null" : "null"));
                         //Logger.LogDebug("Spawned " + spawnedInstance.gameObject.GetComponent<CharacterBody>() + " at position " + (i+1));
