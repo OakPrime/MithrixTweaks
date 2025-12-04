@@ -23,8 +23,10 @@ namespace MithrixMinions
         public const string PluginGUID = PluginAuthor + "." + PluginName;
         public const string PluginAuthor = "OakPrime";
         public const string PluginName = "MithrixTweaks";
-        public const string PluginVersion = "1.0.3";
+        public const string PluginVersion = "1.0.4";
         private RoR2.SpawnCard minionSpawnCard = Addressables.LoadAssetAsync<RoR2.SpawnCard>((object)"RoR2/Base/LunarExploder/cscLunarExploder.asset").WaitForCompletion();
+        private float timer;
+        private const float WAVECOOLDOWN = 1.4f;
 
 
         //The Awake() method is run at the very start when the game is initialized.
@@ -33,64 +35,85 @@ namespace MithrixMinions
             Log.Init(Logger);
             try
             {
-                RoR2.RoR2Application.onLoad += () =>
+                MMConfig.InitializeConfig();
+
+                if (MMConfig.waveDmgMultiplier.Value != 1.0)
                 {
-                    EntityStates.BrotherMonster.ExitSkyLeap.waveProjectileDamageCoefficient /= 2.5f;
-                };
-                var timer = 1.55f;
-                On.EntityStates.BrotherMonster.ExitSkyLeap.FixedUpdate += (orig, self) =>
+                    RoR2.RoR2Application.onLoad += () =>
+                    {
+                        EntityStates.BrotherMonster.ExitSkyLeap.waveProjectileDamageCoefficient *= MMConfig.waveDmgMultiplier.Value;
+                    };
+                }
+                if (MMConfig.waveCount.Value > 1)
                 {
-                    orig(self);
-                    //Log.LogDebug("Timer: " + timer);
-                    timer -= Time.fixedDeltaTime;
-                    //Log.LogDebug("Timer: " + timer);
-                    //Log.LogDebug("Fixed age: " + self.fixedAge);
-                    //if (self.fixedAge )
-                    if (timer <= 0.0f)
+                    var wavesCompleted = 1;
+                    On.EntityStates.BrotherMonster.ExitSkyLeap.OnEnter += (orig, self) =>
                     {
-                        Log.LogDebug("Fired wave");
-                        self.FireRingAuthority();
-                        timer = 1.4f;
-                    }
-                };
-                On.EntityStates.BrotherMonster.HoldSkyLeap.OnEnter += (orig, self) =>
-                {
-                    orig(self);
-                    MithrixMinionsBehavior behavior = self.characterBody.GetComponent<MithrixMinionsBehavior>();
-                    if (behavior != null)
+                        orig(self);
+                        timer = WAVECOOLDOWN;
+                        wavesCompleted = 1;
+                    };
+                    On.EntityStates.BrotherMonster.ExitSkyLeap.FixedUpdate += (orig, self) =>
                     {
-                        behavior.KillMinions();
-                    }
-                };
-                On.EntityStates.BrotherMonster.ExitSkyLeap.OnEnter += (orig, self) =>
-                {
-                    orig(self);
-                    timer = 1.55f;
-                    //Logger.LogDebug("Duration: " + self.duration);
-                    MithrixMinionsBehavior behavior = self.characterBody.GetComponent<MithrixMinionsBehavior>();
-                    if (behavior == null)
-                    {
-                        //Log.LogDebug("New behavior created");
-                        behavior = self.characterBody.gameObject.AddComponent<MithrixMinionsBehavior>();
-                    }
-                    Vector3[] relativePos = { new Vector3(25.0f, 0.0f, 25.0f), new Vector3(-25.0f, 0.0f, -25.0f), new Vector3(25.0f, 0.0f, -25.0f), new Vector3(-25.0f, 0.0f, 25.0f) };
-                    for (int i = 0; i < 4; i++)
-                    {
-                        GameObject spawnedInstance = this.minionSpawnCard.DoSpawn(self.characterBody.footPosition + relativePos[i], Quaternion.identity, new RoR2.DirectorSpawnRequest(this.minionSpawnCard, new RoR2.DirectorPlacementRule()
+                        orig(self);
+                        //Log.LogDebug("Timer: " + timer);
+                        timer -= Time.fixedDeltaTime;
+                        //Log.LogDebug("Timer: " + timer);
+                        //Log.LogDebug("Fixed age: " + self.fixedAge);
+                        //if (self.fixedAge )
+                        if (timer <= 0.0f && wavesCompleted < MMConfig.waveCount.Value)
                         {
-                            placementMode = RoR2.DirectorPlacementRule.PlacementMode.Direct
-                        }, RoR2.Run.instance.runRNG)
+                            //Log.LogDebug("Fired wave");
+                            self.FireRingAuthority();
+                            timer = WAVECOOLDOWN;
+                            wavesCompleted++;
+                        }
+                    };
+                }
+                
+
+                if (MMConfig.minionCount.Value > 0)
+                {
+                    On.EntityStates.BrotherMonster.HoldSkyLeap.OnEnter += (orig, self) =>
+                    {
+                        orig(self);
+                        MithrixMinionsBehavior behavior = self.characterBody.GetComponent<MithrixMinionsBehavior>();
+                        if (behavior != null)
                         {
-                            teamIndexOverride = new TeamIndex?(TeamIndex.Monster)
-                        }).spawnedInstance;
-                        NetworkServer.Spawn(spawnedInstance);
-                        CharacterBody minionBody = spawnedInstance.gameObject.GetComponent<CharacterMaster>().GetBody();
-                        minionBody.teamComponent.teamIndex = self.characterBody.teamComponent.teamIndex; //prone to null errors, may need to set entire teamComponent
-                        behavior.AddMinion(spawnedInstance.gameObject.GetComponent<CharacterMaster>().GetBody()); //bug prob here
-                        //Logger.LogDebug("Minion body status: " + ((bool)(UnityEngine.Object)spawnedInstance.gameObject.GetComponent<CharacterBody>() ? "not null" : "null"));
-                        //Logger.LogDebug("Spawned " + spawnedInstance.gameObject.GetComponent<CharacterBody>() + " at position " + (i+1));
-                    }
-                };
+                            behavior.KillMinions();
+                        }
+                    };
+                    On.EntityStates.BrotherMonster.ExitSkyLeap.OnEnter += (orig, self) =>
+                    {
+                        orig(self);
+                        //Logger.LogDebug("Duration: " + self.duration);
+                        MithrixMinionsBehavior behavior = self.characterBody.GetComponent<MithrixMinionsBehavior>();
+                        if (behavior == null)
+                        {
+                            //Log.LogDebug("New behavior created");
+                            behavior = self.characterBody.gameObject.AddComponent<MithrixMinionsBehavior>();
+                        }
+                        Vector3[] relativePos = { new Vector3(25.0f, 0.0f, 25.0f), new Vector3(-25.0f, 0.0f, -25.0f), new Vector3(25.0f, 0.0f, -25.0f), new Vector3(-25.0f, 0.0f, 25.0f) };
+                        for (int i = 0; i < MMConfig.minionCount.Value; i++)
+                        {
+                            GameObject spawnedInstance = this.minionSpawnCard.DoSpawn(self.characterBody.footPosition + relativePos[i%4] + (relativePos[i%4] * (i/4) * 0.5f), Quaternion.identity, new RoR2.DirectorSpawnRequest(this.minionSpawnCard, new RoR2.DirectorPlacementRule()
+                            {
+                                placementMode = RoR2.DirectorPlacementRule.PlacementMode.Direct
+                            }, RoR2.Run.instance.runRNG)
+                            {
+                                teamIndexOverride = new TeamIndex?(TeamIndex.Monster)
+                            }).spawnedInstance;
+                            NetworkServer.Spawn(spawnedInstance);
+                            CharacterBody minionBody = spawnedInstance.gameObject.GetComponent<CharacterMaster>().GetBody();
+                            minionBody.teamComponent.teamIndex = self.characterBody.teamComponent.teamIndex; //prone to null errors, may need to set entire teamComponent
+                            behavior.AddMinion(spawnedInstance.gameObject.GetComponent<CharacterMaster>().GetBody()); //bug prob here
+                            //Logger.LogDebug("Minion body status: " + ((bool)(UnityEngine.Object)spawnedInstance.gameObject.GetComponent<CharacterBody>() ? "not null" : "null"));
+                            //Logger.LogDebug("Spawned " + spawnedInstance.gameObject.GetComponent<CharacterBody>() + " at position " + (i+1));
+                        }
+                    };
+                }
+
+                
             }
             catch (Exception e)
             {

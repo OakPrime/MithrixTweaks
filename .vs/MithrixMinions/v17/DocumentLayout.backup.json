@@ -1,0 +1,91 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Dan\\source\\repos\\MithrixMinions\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{2F8A40CC-6D15-486D-B689-0A7A472DB89E}|MithrixMinions\\MithrixMinions.csproj|c:\\users\\dan\\source\\repos\\mithrixminions\\mithrixminions\\mithrixminionsbehavior.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F8A40CC-6D15-486D-B689-0A7A472DB89E}|MithrixMinions\\MithrixMinions.csproj|solutionrelative:mithrixminions\\mithrixminionsbehavior.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F8A40CC-6D15-486D-B689-0A7A472DB89E}|MithrixMinions\\MithrixMinions.csproj|c:\\users\\dan\\source\\repos\\mithrixminions\\mithrixminions\\mmconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F8A40CC-6D15-486D-B689-0A7A472DB89E}|MithrixMinions\\MithrixMinions.csproj|solutionrelative:mithrixminions\\mmconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F8A40CC-6D15-486D-B689-0A7A472DB89E}|MithrixMinions\\MithrixMinions.csproj|c:\\users\\dan\\source\\repos\\mithrixminions\\mithrixminions\\mithrixminions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2F8A40CC-6D15-486D-B689-0A7A472DB89E}|MithrixMinions\\MithrixMinions.csproj|solutionrelative:mithrixminions\\mithrixminions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2F8A40CC-6D15-486D-B689-0A7A472DB89E}|MithrixMinions\\MithrixMinions.csproj|c:\\users\\dan\\source\\repos\\mithrixminions\\mithrixminions\\mithrixminions.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}",
+      "RelativeMoniker": "D:0:0:{2F8A40CC-6D15-486D-B689-0A7A472DB89E}|MithrixMinions\\MithrixMinions.csproj|solutionrelative:mithrixminions\\mithrixminions.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MMConfig.cs",
+              "DocumentMoniker": "C:\\Users\\Dan\\source\\repos\\MithrixMinions\\MithrixMinions\\MMConfig.cs",
+              "RelativeDocumentMoniker": "MithrixMinions\\MMConfig.cs",
+              "ToolTip": "C:\\Users\\Dan\\source\\repos\\MithrixMinions\\MithrixMinions\\MMConfig.cs",
+              "RelativeToolTip": "MithrixMinions\\MMConfig.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-03T18:52:07.641Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MithrixMinions.cs",
+              "DocumentMoniker": "C:\\Users\\Dan\\source\\repos\\MithrixMinions\\MithrixMinions\\MithrixMinions.cs",
+              "RelativeDocumentMoniker": "MithrixMinions\\MithrixMinions.cs",
+              "ToolTip": "C:\\Users\\Dan\\source\\repos\\MithrixMinions\\MithrixMinions\\MithrixMinions.cs",
+              "RelativeToolTip": "MithrixMinions\\MithrixMinions.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAEEAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-14T05:33:43.857Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MithrixMinions",
+              "DocumentMoniker": "C:\\Users\\Dan\\source\\repos\\MithrixMinions\\MithrixMinions\\MithrixMinions.csproj",
+              "RelativeDocumentMoniker": "MithrixMinions\\MithrixMinions.csproj",
+              "ToolTip": "C:\\Users\\Dan\\source\\repos\\MithrixMinions\\MithrixMinions\\MithrixMinions.csproj",
+              "RelativeToolTip": "MithrixMinions\\MithrixMinions.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-08-14T05:33:43.729Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MithrixMinionsBehavior.cs",
+              "DocumentMoniker": "C:\\Users\\Dan\\source\\repos\\MithrixMinions\\MithrixMinions\\MithrixMinionsBehavior.cs",
+              "RelativeDocumentMoniker": "MithrixMinions\\MithrixMinionsBehavior.cs",
+              "ToolTip": "C:\\Users\\Dan\\source\\repos\\MithrixMinions\\MithrixMinions\\MithrixMinionsBehavior.cs",
+              "RelativeToolTip": "MithrixMinions\\MithrixMinionsBehavior.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-01-26T04:34:42.492Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
